@@ -13,35 +13,20 @@ beforeEach(async () => {
   accounts = await web3.eth.getAccounts();
 
   // Use one of these accounts to deploy the contract
+  // Contract is constructor function to which we pass ABI
   inbox = await new web3. eth.Contract(JSON.parse(interface))
+    // deploy contract passing bytecode and initial argument
     .deploy({ data: bytecode, arguments: ['Hello world!']})
+    // send function actually deploys the contract to the network
     .send({ from: accounts[0], gas: '1000000' });
+    // returned object - 'inbox' represents what exist on the blockchain
 })
 
 describe('Inbox', () => {
   it('deploys a contract', () => {
-    console.log(inbox);
+    // ok method checks if the value exists
+    // if inbox.options.address is null/undefined, it will fail
+    // If contract was deployed, it will have an address
+    assert.ok(inbox.options.address);
   })
 })
-// class Car {
-//   park() {
-//     return 'stopped';
-//   }
-
-//   drive() {
-//     return 'vroom';
-//   }
-// }
-
-// let car;
-// beforeEach(() => car = new Car())
-
-// describe('Car', () => {
-//   it('can park', () => {
-//     assert.equal(car.park(), 'stopped');
-//   });
-
-//   it('can drive', () => {
-//     assert.equal(car.drive(), 'vroom');
-//   });
-// })
