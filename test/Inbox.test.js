@@ -34,8 +34,14 @@ describe('Inbox', () => {
   it('has a default message', async () => {
     // reference contract and call message method
     // /message(- here put arguments for the function if neccessary-)
-    // .call(- here put object with specs like who makes transaction, gasLimit, etc-)
     const message = await inbox.methods.message().call();
     assert.equal(message, INITIAL_MESSAGE);
   })
+  it('can change message', async () => {
+    const newMessage = 'Bye World!';
+    // .send(- here put object with specs like who makes transaction, gasLimit, etc-)
+    await inbox.methods.setMessage(newMessage).send({ from: accounts[0]});
+    const message = await inbox.methods.message().call();
+    assert.equal(message, newMessage);
+  });
 })
