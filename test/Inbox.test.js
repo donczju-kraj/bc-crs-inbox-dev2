@@ -5,6 +5,7 @@ const { Web3 } = require('web3');
 const web3 = new Web3(ganache.provider());
 const { interface, bytecode } = require('../compile');
 
+const INITIAL_MESSAGE = 'Hello world!';
 let accounts;
 let inbox;
 beforeEach(async () => {
@@ -28,5 +29,13 @@ describe('Inbox', () => {
     // if inbox.options.address is null/undefined, it will fail
     // If contract was deployed, it will have an address
     assert.ok(inbox.options.address);
+  })
+
+  it('has a default message', async () => {
+    // reference contract and call message method
+    // /message(- here put arguments for the function if neccessary-)
+    // .call(- here put object with specs like who makes transaction, gasLimit, etc-)
+    const message = await inbox.methods.message().call();
+    assert.equal(message, INITIAL_MESSAGE);
   })
 })
